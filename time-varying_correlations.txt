@@ -1,0 +1,1093 @@
+*
+*
+cal(m) 1991:11
+all 2014:11
+open data
+data(format=xlsx,org=obs)
+tab
+set houret = 1200*((house-house{1})/house{1})
+set goldret = 1200*((gold-gold{1})/gold{1})
+set oilret = 1200*((oil-oil{1})/oil{1})
+set longret = 1200*((long-long{1})/long{1})
+set shortret = 1200*((short-short{1})/short{1})
+set intret = 1200*((interm-interm{1})/interm{1})
+set invsret = 1200*((inv_short-inv_short{1})/inv_short{1})
+set junkret = 1200*((junk-junk{1})/junk{1})
+
+set contraction = t>=1990:7:1.and.t<=1991:3:1.or.t>=2001:3:1.and.t<=2001:11:1.or.t>=2007:12:1.and.t<=2009:6:1
+set qe = %if(t==2008:12,1,0)
+
+
+*****************Entire Time Period Rolling Window Correlations******************
+do time2 =1993:11, 2014:11
+	CMOM(CENTER,corr,print,matrix=cor) time2-23 time2
+	# SP HOURET GOLDRET OILRET LONGRET SHORTRET INTRET INVSRET JUNKRET
+   set mov12 time2 time2 = cor(1,2)
+	set mov13 time2 time2 = cor(1,3)
+	set mov14 time2 time2 = cor(1,4)
+	set mov15 time2 time2 = cor(1,5)
+	set mov16 time2 time2 = cor(1,6)
+	set mov17 time2 time2 = cor(1,7)
+	set mov18 time2 time2 = cor(1,8)
+	set mov19 time2 time2 = cor(1,9)
+	set mov23 time2 time2 = cor(2,3)
+	set mov24 time2 time2 = cor(2,4)
+	set mov25 time2 time2 = cor(2,5)
+	set mov26 time2 time2 = cor(2,6)
+	set mov27 time2 time2 = cor(2,7)
+	set mov28 time2 time2 = cor(2,8)
+	set mov29 time2 time2 = cor(2,9)
+	set mov34 time2 time2 = cor(3,4)
+	set mov35 time2 time2 = cor(3,5)
+	set mov36 time2 time2 = cor(3,6)
+	set mov37 time2 time2 = cor(3,7)
+	set mov38 time2 time2 = cor(3,8)
+	set mov39 time2 time2 = cor(3,9)
+	set mov45 time2 time2 = cor(4,5)
+	set mov46 time2 time2 = cor(4,6)
+	set mov47 time2 time2 = cor(4,7)
+	set mov48 time2 time2 = cor(4,8)
+	set mov49 time2 time2 = cor(4,9)
+	set mov56 time2 time2 = cor(5,6)
+	set mov57 time2 time2 = cor(5,7)
+	set mov58 time2 time2 = cor(5,8)
+	set mov59 time2 time2 = cor(5,9)
+	set mov67 time2 time2 = cor(6,7)
+	set mov68 time2 time2 = cor(6,8)
+	set mov69 time2 time2 = cor(6,9)
+	set mov78 time2 time2 = cor(7,8)
+	set mov79 time2 time2 = cor(7,9)
+	set mov89 time2 time2 = cor(8,9)
+end do time2
+gra 1; # mov14
+spgraph(hfields=1,vfields=3)
+graph(grid=qe,shading=contraction,hea="Stocks and Oil")
+# mov14
+graph(grid=qe,shading=contraction,hea="Stocks and Corporate Investment Grade Bonds")
+# mov18
+graph(grid=qe,shading=contraction,hea="Stocks and Corporate Junk Bonds")
+# mov19
+spgraph(done)
+
+spgraph(hfields=1,vfields=3)
+graph(grid=qe,shading=contraction,hea="Corporate Investment Grade Bonds and Long-Term U.S. Treasury Bonds")
+# mov58
+graph(grid=qe,shading=contraction,hea="Corporate Investment Grade Bonds and Short-Term U.S. Treasury Bonds")
+# mov68
+graph(grid=qe,shading=contraction,hea="Corporate Investment Grade Bonds and Intermediate-Term U.S. Treasury Bonds")
+# mov78
+spgraph(done)
+
+
+*****************Before QE Rolling Window Correlations******************
+do time1 =1993:11, 2008:11
+	CMOM(CENTER,corr,print,matrix=cor) time1-23 time1
+	# SP HOURET GOLDRET OILRET LONGRET SHORTRET INTRET INVSRET JUNKRET
+   set move12 time1 time1 = cor(1,2)
+	set move13 time1 time1 = cor(1,3)
+	set move14 time1 time1 = cor(1,4)
+	set move15 time1 time1 = cor(1,5)
+	set move16 time1 time1 = cor(1,6)
+	set move17 time1 time1 = cor(1,7)
+	set move18 time1 time1 = cor(1,8)
+	set move19 time1 time1 = cor(1,9)
+	set move23 time1 time1 = cor(2,3)
+	set move24 time1 time1 = cor(2,4)
+	set move25 time1 time1 = cor(2,5)
+	set move26 time1 time1 = cor(2,6)
+	set move27 time1 time1 = cor(2,7)
+	set move28 time1 time1 = cor(2,8)
+	set move29 time1 time1 = cor(2,9)
+	set move34 time1 time1 = cor(3,4)
+	set move35 time1 time1 = cor(3,5)
+	set move36 time1 time1 = cor(3,6)
+	set move37 time1 time1 = cor(3,7)
+	set move38 time1 time1 = cor(3,8)
+	set move39 time1 time1 = cor(3,9)
+	set move45 time1 time1 = cor(4,5)
+	set move46 time1 time1 = cor(4,6)
+	set move47 time1 time1 = cor(4,7)
+	set move48 time1 time1 = cor(4,8)
+	set move49 time1 time1 = cor(4,9)
+	set move56 time1 time1 = cor(5,6)
+	set move57 time1 time1 = cor(5,7)
+	set move58 time1 time1 = cor(5,8)
+	set move59 time1 time1 = cor(5,9)
+	set move67 time1 time1 = cor(6,7)
+	set move68 time1 time1 = cor(6,8)
+	set move69 time1 time1 = cor(6,9)
+	set move78 time1 time1 = cor(7,8)
+	set move79 time1 time1 = cor(7,9)
+	set move89 time1 time1 = cor(8,9)
+end do time1
+sta move12
+sta move13
+sta move14
+sta move15
+sta move16
+sta move17
+sta move18
+sta move19
+sta move23
+sta move24
+sta move25
+sta move26
+sta move27
+sta move28
+sta move29
+sta move34
+sta move35
+sta move36
+sta move37
+sta move38
+sta move39
+sta move45
+sta move46
+sta move47
+sta move48
+sta move49
+sta move56
+sta move57
+sta move58
+sta move59
+sta move67
+sta move68
+sta move69
+sta move78
+sta move79
+sta move89
+
+
+
+*****************After QE Rolling Window Correlations******************
+do time3 =2008:12, 2014:11
+	CMOM(CENTER,corr,print,matrix=cor) time3-23 time3
+	# SP HOURET GOLDRET OILRET LONGRET SHORTRET INTRET INVSRET JUNKRET
+   set movi12 time3 time3 = cor(1,2)
+	set movi13 time3 time3 = cor(1,3)
+	set movi14 time3 time3 = cor(1,4)
+	set movi15 time3 time3 = cor(1,5)
+	set movi16 time3 time3 = cor(1,6)
+	set movi17 time3 time3 = cor(1,7)
+	set movi18 time3 time3 = cor(1,8)
+	set movi19 time3 time3 = cor(1,9)
+	set movi23 time3 time3 = cor(2,3)
+	set movi24 time3 time3 = cor(2,4)
+	set movi25 time3 time3 = cor(2,5)
+	set movi26 time3 time3 = cor(2,6)
+	set movi27 time3 time3 = cor(2,7)
+	set movi28 time3 time3 = cor(2,8)
+	set movi29 time3 time3 = cor(2,9)
+	set movi34 time3 time3 = cor(3,4)
+	set movi35 time3 time3 = cor(3,5)
+	set movi36 time3 time3 = cor(3,6)
+	set movi37 time3 time3 = cor(3,7)
+	set movi38 time3 time3 = cor(3,8)
+	set movi39 time3 time3 = cor(3,9)
+	set movi45 time3 time3 = cor(4,5)
+	set movi46 time3 time3 = cor(4,6)
+	set movi47 time3 time3 = cor(4,7)
+	set movi48 time3 time3 = cor(4,8)
+	set movi49 time3 time3 = cor(4,9)
+	set movi56 time3 time3 = cor(5,6)
+	set movi57 time3 time3 = cor(5,7)
+	set movi58 time3 time3 = cor(5,8)
+	set movi59 time3 time3 = cor(5,9)
+	set movi67 time3 time3 = cor(6,7)
+	set movi68 time3 time3 = cor(6,8)
+	set movi69 time3 time3 = cor(6,9)
+	set movi78 time3 time3 = cor(7,8)
+	set movi79 time3 time3 = cor(7,9)
+	set movi89 time3 time3 = cor(8,9)
+end do time3
+sta movi12
+sta movi13
+sta movi14
+sta movi15
+sta movi16
+sta movi17
+sta movi18
+sta movi19
+sta movi23
+sta movi24
+sta movi25
+sta movi26
+sta movi27
+sta movi28
+sta movi29
+sta movi34
+sta movi35
+sta movi36
+sta movi37
+sta movi38
+sta movi39
+sta movi45
+sta movi46
+sta movi47
+sta movi48
+sta movi49
+sta movi56
+sta movi57
+sta movi58
+sta movi59
+sta movi67
+sta movi68
+sta movi69
+sta movi78
+sta movi79
+sta movi89
+
+
+
+
+CMOM(CENTER,corr,print,matrix=cor) 1991:11 1992:10
+# SP HOURET GOLDRET OILRET LONGRET SHORTRET INTRET INVSRET JUNKRET
+dis cor(1,3)
+
+
+
+
+@uradf(det=trend) us6m
+@uradf(det=trend) us6m * 2008:11
+@uradf(det=trend) us6m 2008:12 *
+
+@uradf(det=constant) sp
+@uradf(det=constant) sp * 2008:11
+@uradf(det=constant) sp 2008:12 *
+
+@uradf(det=constant) houret
+@uradf(det=constant) houret * 2008:11
+@uradf(det=constant) houret 2008:12 *
+
+@uradf(det=constant) goldret
+@uradf(det=constant) goldret * 2008:11
+@uradf(det=constant) goldret 2008:12 *
+
+@uradf(det=constant) oilret
+@uradf(det=constant) oilret * 2008:11
+@uradf(det=constant) oilret 2008:12 *
+
+@uradf(det=constant) longret
+@uradf(det=constant) longret * 2008:11
+@uradf(det=constant) longret 2008:12 *
+
+@uradf(det=constant) shortret
+@uradf(det=constant) shortret * 2008:11
+@uradf(det=constant) shortret 2008:12 *
+
+@uradf(det=constant) intret
+@uradf(det=constant) intret * 2008:11
+@uradf(det=constant) intret 2008:12 *
+
+@uradf(det=constant) invsret
+@uradf(det=constant) invsret * 2008:11
+@uradf(det=constant) invsret 2008:12 *
+
+@uradf(det=constant) junkret
+@uradf(det=constant) junkret * 2008:11
+@uradf(det=constant) junkret 2008:12 *
+
+
+
+pri / junkret
+@lagselect(det=constant) us6m
+lin us6m / resids; # constant us6m{1 to 11}
+cor(qstats,span=4,number=12) resids
+@mcleodli resids
+@ARCHTest(lags=7,form=lm) resids /
+
+
+set r2 = resids^2
+
+cor(qstats,span=4,number=12) r2
+
+@lagselect(det=constant) sp
+lin sp / resids; # constant sp{1 to 1}
+cor(qstats,span=4,number=12) resids
+@mcleodli resids
+@ARCHTest(lags=13,form=lm) resids /
+
+set r2 = resids^2
+
+cor(qstats,span=4,number=12) r2
+
+@lagselect(det=constant) houret
+lin houret / resids; # constant houret{1 to 4}
+cor(qstats,span=4,number=12) resids
+@mcleodli resids
+@ARCHTest(lags=2,form=lm) resids /
+
+
+set r2 = resids^2
+
+cor(qstats,span=4,number=12) r2
+
+@lagselect(det=constant) goldret
+lin goldret / resids; # constant goldret{1 to 1}
+cor(qstats,span=4,number=12) resids
+@mcleodli resids
+@ARCHTest(lags=1,form=lm) resids /
+
+
+set r2 = resids^2
+
+cor(qstats,span=4,number=12) r2
+@lagselect(det=constant) oilret
+lin oilret / resids; # constant oilret{1 to 1}
+cor(qstats,span=4,number=12) resids
+@mcleodli resids
+@ARCHTest(lags=1,form=lm) resids /
+
+
+set r2 = resids^2
+
+cor(qstats,span=4,number=12) r2
+
+@lagselect(det=constant) longret
+lin longret / resids; # constant longret{1 to 3}
+cor(qstats,span=4,number=12) resids
+@mcleodli resids
+@ARCHTest(lags=2,form=lm) resids /
+
+
+set r2 = resids^2
+
+cor(qstats,span=4,number=12) r2
+
+@lagselect(det=constant) shortret
+lin shortret / resids; # constant shortret{1 to 1}
+cor(qstats,span=4,number=12) resids
+@mcleodli resids
+@ARCHTest(lags=2,form=lm) resids /
+
+
+set r2 = resids^2
+
+cor(qstats,span=4,number=12) r2
+
+@lagselect(det=constant) intret
+lin intret / resids; # constant intret{1 to 3}
+cor(qstats,span=4,number=12) resids
+@mcleodli resids
+@ARCHTest(lags=7,form=lm) resids /
+
+
+set r2 = resids^2
+
+cor(qstats,span=4,number=12) r2
+
+@lagselect(det=constant) invsret
+lin invsret / resids; # constant invsret{1 to 1}
+cor(qstats,span=4,number=12) resids
+@mcleodli resids
+@ARCHTest(lags=3,form=lm) resids /
+
+
+set r2 = resids^2
+
+cor(qstats,span=4,number=12) r2
+
+@lagselect(det=constant) junkret
+lin junkret / resids; # constant junkret{1 to 2}
+cor(qstats,span=4,number=12) resids
+@mcleodli resids
+@ARCHTest(lags=1,form=lm) resids /
+
+
+set r2 = resids^2
+
+cor(qstats,span=4,number=12) r2
+
+
+
+spgraph(hfields=2,vfields=5)
+graph(shading=contraction,hea="Six Month Treasury Bill Rate")
+# us6m
+graph(shading=contraction,hea="S&P 500 Total Monthly Return")
+# sp
+graph(shading=contraction,hea="Case Shiller Home Price Index Monthly Return")
+# houret
+graph(shading=contraction,hea="Price of Gold - Monthly Return")
+# goldret
+graph(shading=contraction,hea="Price of Crude Oil - Monthly Return")
+# oilret
+graph(shading=contraction,hea="Long-Term Treasury Bond Fund")
+# longret
+graph(shading=contraction,hea="Short-Term Treasury Bond Fund")
+# shortret
+graph(shading=contraction,hea="Intermediate-Term Treasury Bond Fund")
+# intret
+graph(shading=contraction,hea="Investment Grade Corporate Bond Fund")
+# invsret
+graph(shading=contraction,hea="Corporate Junk Bond Fund")
+# junkret
+spgraph(done)
+
+
+compute n=10
+dec vect[series] y(n)
+set y(1) = us6m
+set y(2) = sp
+set y(3) = houret
+set y(4) = goldret
+set y(5) = oilret
+set y(6) = longret
+set y(7) = shortret
+set y(8) = intret
+set y(9) = invsret
+set y(10) = junkret
+
+VCV
+# SP HOURET GOLDRET OILRET LONGRET SHORTRET INTRET INVSRET JUNKRET
+
+*
+* Estimate univariate GARCH models, saving the residuals and variances.
+* Create VECT[SERIES] with the standardized residuals and the negative
+* part of the standardized residuals.
+*
+dec vect[series] u(n) h(n) eps(n) eta(n)
+do i=1,n
+   garch(p=1,q=1,METHOD=Bfgs, pmethod=simplex, piters=5,hseries=h(i),resids=u(i),asy,exp) / y(i)
+   set eps(i) = u(i)/sqrt(h(i))
+   set eta(i) = %min(eps(i),0.0)
+end do i
+print / eps(1)
+*garch(regressors,p=1,q=1,METHOD=Bfgs, pmethod=simplex, piters=500,hseries=h(1),resids=u(1)) / y(1)
+*# constant y(1){1 to 11}
+*com aic = -2*%funcval+2*%nreg
+*com sbc = -2*%funcval+%nreg*log(%nobs)
+*dis 'bic = ' sbc
+
+*garch(regressors,p=1,q=1,i=drift,METHOD=Bfgs, pmethod=simplex, piters=200,hseries=h(1),resids=u(1),asy) / y(1)
+*# constant y(1){1 to 11}
+*com aic = -2*%funcval+2*%nreg
+*com sbc = -2*%funcval+%nreg*log(%nobs)
+*dis 'bic = ' sbc
+
+garch(p=1,q=1,METHOD=Bfgs,regressors, pmethod=simplex, piters=20,hseries=h(1),resids=u(1),asy,exp) / y(1)
+# constant y(1){1 to 11}
+com aic = -2*%funcval+2*%nreg
+com sbc = -2*%funcval+%nreg*log(%nobs)
+dis 'bic = ' sbc
+
+set eps(1) = u(1)/sqrt(h(1))
+set eta(1) = %min(eps(1),0.0)
+
+cor(qstats,span=4,number=12) eps(1)
+
+set r2 = eps(1)^2
+
+cor(qstats,span=4,number=12) r2
+
+garch(regressors,p=1,q=1,METHOD=Bfgs, pmethod=simplex, piters=20,hseries=h(2),resids=u(2)) / y(2)
+# constant y(2){1 to 1}
+com aic = -2*%funcval+2*%nreg
+com sbc = -2*%funcval+%nreg*log(%nobs)
+dis 'bic = ' sbc
+
+garch(regressors,p=1,q=1,METHOD=Bfgs, pmethod=simplex, piters=20,hseries=h(2),resids=u(2),asy) / y(2)
+# constant y(2){1 to 1}
+com aic = -2*%funcval+2*%nreg
+com sbc = -2*%funcval+%nreg*log(%nobs)
+dis 'bic = ' sbc
+
+garch(regressors,p=1,q=1,METHOD=Bfgs, pmethod=simplex, piters=5,hseries=h(2),resids=u(2),asy,exp) / y(2)
+# constant y(2){1 to 1}
+com aic = -2*%funcval+2*%nreg
+com sbc = -2*%funcval+%nreg*log(%nobs)
+dis 'bic = ' sbc
+gra 1; # h(2)
+
+set eps(2) = u(2)/sqrt(h(2))
+set eta(2) = %min(eps(2),0.0)
+
+cor(qstats,span=4,number=12) eps(2)
+
+set r2 = eps(2)^2
+
+cor(qstats,span=4,number=12) r2
+
+
+*garch(regressors,p=1,q=1,METHOD=Bhhh, pmethod=simplex, piters=20,hseries=h(3),resids=u(3)) / y(3)
+*# constant y(3){1 to 4}
+*com aic = -2*%funcval+2*%nreg
+*com sbc = -2*%funcval+%nreg*log(%nobs)
+*dis 'bic = ' sbc
+
+*garch(regressors,p=1,q=1,METHOD=BHHH, pmethod=simplex, piters=20,hseries=h(3),resids=u(3),asy) / y(3)
+*# constant y(3){1 to 4}
+*com aic = -2*%funcval+2*%nreg
+*com sbc = -2*%funcval+%nreg*log(%nobs)
+*dis 'bic = ' sbc
+
+garch(regressors,p=1,q=1,METHOD=Bhhh, pmethod=simplex, piters=100,hseries=h(3),resids=u(3),asy,exp) / y(3)
+# constant y(3){1 to 4}
+com aic = -2*%funcval+2*%nreg
+com sbc = -2*%funcval+%nreg*log(%nobs)
+dis 'bic = ' sbc
+
+set eps(3) = u(3)/sqrt(h(3))
+set eta(3) = %min(eps(3),0.0)
+*gra 1; # h(3)
+
+cor(qstats,span=4,number=12) eps(3)
+
+set r2 = eps(3)^2
+
+cor(qstats,span=4,number=12) r2
+
+
+*garch(regressors,p=1,q=1,i=drift,METHOD=Bfgs, pmethod=simplex, piters=200,hseries=h(4),resids=u(4)) / y(4)
+*# constant y(4){1 to 1}
+*com aic = -2*%funcval+2*%nreg
+*com sbc = -2*%funcval+%nreg*log(%nobs)
+*dis 'bic = ' sbc
+
+*garch(regressors,p=1,q=1,i=drift,METHOD=Bfgs, pmethod=simplex, piters=200,hseries=h(4),resids=u(4),asy) / y(4)
+*# constant y(4){1 to 1}
+*com aic = -2*%funcval+2*%nreg
+*com sbc = -2*%funcval+%nreg*log(%nobs)
+*dis 'bic = ' sbc
+
+garch(regressors,p=1,q=1,METHOD=Bfgs, pmethod=simplex, piters=50,hseries=h(4),resids=u(4),asy,exp) / y(4)
+# constant y(4){1 to 1}
+com aic = -2*%funcval+2*%nreg
+com sbc = -2*%funcval+%nreg*log(%nobs)
+dis 'bic = ' sbc
+*gra 1; # h(4)
+set eps(4) = u(4)/sqrt(h(4))
+set eta(4) = %min(eps(4),0.0)
+
+cor(qstats,span=4,number=12) eps(4)
+
+set r2 = eps(4)^2
+
+cor(qstats,span=4,number=12) r2
+
+
+garch(regressors,p=1,q=1,METHOD=Bfgs, pmethod=simplex, piters=200,hseries=h(5),resids=u(5)) / y(5)
+# constant y(5){1 to 1}
+com aic = -2*%funcval+2*%nreg
+com sbc = -2*%funcval+%nreg*log(%nobs)
+dis 'bic = ' sbc
+
+*garch(regressors,p=1,q=1,METHOD=Bfgs, pmethod=simplex, piters=200,hseries=h(5),resids=u(5),asy) / y(5)
+*# constant y(5){1 to 1}
+*com aic = -2*%funcval+2*%nreg
+*com sbc = -2*%funcval+%nreg*log(%nobs)
+*dis 'bic = ' sbc
+
+*garch(regressors,p=1,q=1,METHOD=Bfgs, pmethod=simplex, piters=50,hseries=h(5),resids=u(5),asy,exp) / y(5)
+*# constant y(5){1 to 1}
+*com aic = -2*%funcval+2*%nreg
+*com sbc = -2*%funcval+%nreg*log(%nobs)
+*dis 'bic = ' sbc
+*gra 1; # h(5)
+set eps(5) = u(5)/sqrt(h(5))
+set eta(5) = %min(eps(5),0.0)
+
+cor(qstats,span=4,number=12) eps(5)
+
+set r2 = eps(5)^2
+
+cor(qstats,span=4,number=12) r2
+
+garch(regressors,p=1,q=1,METHOD=Bhhh, pmethod=simplex, piters=200,hseries=h(6),resids=u(6)) / y(6)
+# constant y(6){1 to 3}
+com aic = -2*%funcval+2*%nreg
+com sbc = -2*%funcval+%nreg*log(%nobs)
+dis 'bic = ' sbc
+
+*garch(regressors,p=1,q=1,METHOD=BHHH, pmethod=simplex, piters=200,hseries=h(6),resids=u(6),asy) / y(6)
+*# constant y(6){1 to 3}
+*com aic = -2*%funcval+2*%nreg
+*com sbc = -2*%funcval+%nreg*log(%nobs)
+*dis 'bic = ' sbc
+
+*garch(regressors,p=1,q=1,METHOD=Bfgs, pmethod=simplex, piters=50,hseries=h(6),resids=u(6),asy,exp) / y(6)
+*# constant y(6){1 to 3}
+*com aic = -2*%funcval+2*%nreg
+*com sbc = -2*%funcval+%nreg*log(%nobs)
+*dis 'bic = ' sbc
+*gra 1; # h(6)
+set eps(6) = u(6)/sqrt(h(6))
+set eta(6) = %min(eps(6),0.0)
+
+cor(qstats,span=4,number=12) eps(6)
+
+set r2 = eps(6)^2
+
+cor(qstats,span=4,number=12) r2
+
+
+*garch(regressors,p=1,q=1,METHOD=Bhhh, pmethod=simplex, piters=200,hseries=h(7),resids=u(7)) / y(7)
+*# constant y(7){1 to 1}
+*com aic = -2*%funcval+2*%nreg
+*com sbc = -2*%funcval+%nreg*log(%nobs)
+*dis 'bic = ' sbc
+
+*garch(regressors,p=1,q=1,METHOD=BHHH, pmethod=simplex, piters=200,hseries=h(7),resids=u(7),asy) / y(7)
+*# constant y(7){1 to 1}
+*com aic = -2*%funcval+2*%nreg
+*com sbc = -2*%funcval+%nreg*log(%nobs)
+*dis 'bic = ' sbc
+
+garch(regressors,p=1,q=1,METHOD=Bfgs, pmethod=simplex, piters=50,hseries=h(7),resids=u(7),asy,exp) / y(7)
+# constant y(7){1 to 1}
+com aic = -2*%funcval+2*%nreg
+com sbc = -2*%funcval+%nreg*log(%nobs)
+dis 'bic = ' sbc
+*gra 1; # h(7)
+set eps(7) = u(7)/sqrt(h(7))
+set eta(7) = %min(eps(7),0.0)
+
+cor(qstats,span=4,number=12) eps(7)
+
+set r2 = eps(7)^2
+
+cor(qstats,span=4,number=12) r2
+
+*garch(regressors,p=1,q=1,METHOD=Bhhh, pmethod=simplex, piters=200,hseries=h(8),resids=u(8)) / y(8)
+*# constant y(8){1 to 3}
+*com aic = -2*%funcval+2*%nreg
+*com sbc = -2*%funcval+%nreg*log(%nobs)
+*dis 'bic = ' sbc
+
+*garch(regressors,p=1,q=1,METHOD=BHHH, pmethod=simplex, piters=200,hseries=h(8),resids=u(8),asy) / y(8)
+*# constant y(8){1 to 3}
+*com aic = -2*%funcval+2*%nreg
+*com sbc = -2*%funcval+%nreg*log(%nobs)
+*dis 'bic = ' sbc
+
+garch(regressors,p=1,q=1,METHOD=Bfgs, pmethod=simplex, piters=50,hseries=h(8),resids=u(8),asy,exp) / y(8)
+# constant y(8){1 to 3}
+com aic = -2*%funcval+2*%nreg
+com sbc = -2*%funcval+%nreg*log(%nobs)
+dis 'bic = ' sbc
+*gra 1; # h(8)
+set eps(8) = u(8)/sqrt(h(8))
+set eta(8) = %min(eps(8),0.0)
+
+cor(qstats,span=4,number=12) eps(8)
+
+set r2 = eps(8)^2
+
+cor(qstats,span=4,number=12) r2
+gra ;# r2
+garch(regressors,p=1,q=1,METHOD=Bfgs, pmethod=simplex, piters=20,hseries=h(9),resids=u(9)) / y(9)
+# constant y(9){1 to 1}
+com aic = -2*%funcval+2*%nreg
+com sbc = -2*%funcval+%nreg*log(%nobs)
+dis 'bic = ' sbc
+
+*garch(regressors,p=1,q=1,METHOD=Bfgs, pmethod=simplex, piters=20,hseries=h(9),resids=u(9),asy) / y(9)
+*# constant y(9){1 to 1}
+*com aic = -2*%funcval+2*%nreg
+*com sbc = -2*%funcval+%nreg*log(%nobs)
+*dis 'bic = ' sbc
+
+*garch(regressors,p=1,q=1,METHOD=Bfgs, pmethod=simplex, piters=200,hseries=h(9),resids=u(9),asy,exp) / y(9)
+*# constant y(9){1 to 1}
+*com aic = -2*%funcval+2*%nreg
+*com sbc = -2*%funcval+%nreg*log(%nobs)
+*dis 'bic = ' sbc
+*gra 1; # h(9)
+set eps(9) = u(9)/sqrt(h(9))
+set eta(9) = %min(eps(9),0.0)
+
+cor(qstats,span=4,number=12) eps(9)
+
+set r2 = eps(9)^2
+
+cor(qstats,span=4,number=12) r2
+
+*garch(regressors,p=1,q=1,METHOD=Bfgs, pmethod=simplex, piters=20,hseries=h(10),resids=u(10)) / y(10)
+*# constant y(10){1 to 1}
+*com aic = -2*%funcval+2*%nreg
+*com sbc = -2*%funcval+%nreg*log(%nobs)
+*dis 'bic = ' sbc
+
+garch(regressors,p=1,q=1,METHOD=Bfgs, pmethod=simplex, piters=20,hseries=h(10),resids=u(10),asy) / y(10)
+# constant y(10){1 to 1}
+com aic = -2*%funcval+2*%nreg
+com sbc = -2*%funcval+%nreg*log(%nobs)
+dis 'bic = ' sbc
+
+*garch(regressors,p=1,q=1,METHOD=Bfgs, pmethod=simplex, piters=200,hseries=h(10),resids=u(10),asy,exp) / y(10)
+*# constant y(10){1 to 1}
+*com aic = -2*%funcval+2*%nreg
+*com sbc = -2*%funcval+%nreg*log(%nobs)
+*dis 'bic = ' sbc
+*gra 1; # h(10)
+set eps(10) = u(10)/sqrt(h(10))
+set eta(10) = %min(eps(10),0.0)
+
+cor(qstats,span=4,number=12) eps(10)
+
+set r2 = eps(10)^2
+
+cor(qstats,span=4,number=12) r2
+
+pri / h(10)
+spgraph(hfields=5,vfields=2)
+graph(shading=contraction,hea="US6M")
+# h(1)
+graph(shading=contraction,hea="SP")
+# h(2)
+graph(shading=contraction,hea="Case Shiller")
+# h(3)
+graph(shading=contraction,hea="Gold")
+# h(4)
+graph(shading=contraction,hea="Oil")
+# h(5)
+graph(shading=contraction,hea="US Long")
+# h(6)
+graph(shading=contraction,hea="US Short")
+# h(7)
+graph(shading=contraction,hea="US Int")
+# h(8)
+graph(shading=contraction,hea="Corp Inv")
+# h(9)
+graph(shading=contraction,hea="Corp Junk")
+# h(10)
+spgraph(done)
+*
+* The recursions in the DCC models need a lagged value, so this makes
+* sure there is space for them when setting GSTART (start parameter used
+* in the MAXIMIZE instructions). This isn't a problem in this data set,
+* since there's a data point lost in converting to returns, but if the
+* original data were already returns, GARCH would be able to start at 1.
+* This makes sure GSTART is at least 2.
+*
+compute gstart=%imax(%regstart(),2),gend=%regend()
+*
+* Keep track of the number of parameters across all the univariate
+* models.
+*
+compute uniparms=n*%nreg
+*
+* These are empirical estimates
+*
+vcv(nocenter,matrix=qbar)
+# eps
+vcv(nocenter,matrix=nbar)
+# eta
+*************************************************************************
+*************************************************************************
+*
+* The same overall setup will be used for all models, with the
+* restrictions imposed through the parameter sets.
+*
+* These are the general parameters
+*
+dec vect aq(n) bq(n) gq(n)
+compute aq=%const(sqrt(.1))
+compute bq=%const(sqrt(.85))
+compute gq=%const(0.0)
+*
+dec frml[symm] qf
+dec series[symm] q ee nn hh
+dec symm qcmatrix
+*
+gset q  = qbar
+gset ee = qbar
+gset nn = nbar
+gset hh = qbar
+gset ee gstart gend = %outerxx(%xt(eps,t))
+gset nn gstart gend = %outerxx(%xt(eta,t))
+*
+* This computes the "intercept" in the evolution matrix for Q.
+*
+function StartQC
+compute qcmatrix=qbar-%diag(aq)*qbar*%diag(aq)-%diag(bq)*qbar*%diag(bq)-%diag(gq)*nbar*%diag(gq)
+eigen qcmatrix qceigen
+end StartQC
+*
+* This computes the Q matrix at t, given the lags of Q and the
+* standardized residuals.
+*
+frml qf   = qcmatrix+%diag(aq)*ee{1}*%diag(aq)+%diag(bq)*q{1}*%diag(bq)+%diag(gq)*nn{1}*%diag(gq)
+*
+* This computes the log likelihood at t given the values of the
+* (unstandardized) residuals.
+*
+frml logl = (q=qf),hh=%corrtocv(%cvtocorr(q),%xt(h,t)),%logdensity(hh,%xt(u,t))
+*************************************************************************
+*
+* DCC - this won't be quite the same as the DCC you would get with the
+* GARCH instruction  because it uses the two-step likelihood.
+*
+* Note that AFIX and BFIX enter the calculation of the QC as squares, so
+* the stability condition is AFIX^2+BFIX^2<1
+*
+compute bfix=sqrt(.85),afix=sqrt(.10)
+nonlin afix bfix
+compute gq=%const(0.0)
+maximize(start=%(bq=%const(bfix),aq=%const(afix),StartQC()),method=bfgs,title="Two-step DCC",pmethod=simplex,piters=20) logl gstart gend
+disp "DCC BIC" -2.0*%logl+(%nreg+uniparms)*log(%nobs)
+disp "LogL" %logl
+disp %nreg
+disp uniparms
+disp %nobs
+*
+* ADCC
+*
+compute bfix=sqrt(.85),afix=sqrt(.10),gfix=0.0
+nonlin afix bfix gfix
+maximize(start=%(bq=%const(bfix),aq=%const(afix),gq=%const(gfix),StartQC()),method=bfgs,title="Two-step ADCC") logl gstart gend
+disp "ADCC BIC" -2.0*%logl+(%nreg+uniparms)*log(%nobs)
+disp "LogL" %logl
+*
+* GDDCC (Generalized Diagonal DCC)
+*
+nonlin aq bq
+compute aq=%const(sqrt(.1))
+compute bq=%const(sqrt(.85))
+compute gq=%const(0.0)
+maximize(start=%(StartQC()),pmethod=simplex,piters=20,method=bfgs,title="GDDCC") logl gstart gend
+disp "GDDCC BIC" -2.0*%logl+(%nreg+uniparms)*log(%nobs)
+disp "LogL" %logl
+disp %nreg
+disp uniparms
+disp %nobs
+*
+* AGDDCC (Asymmetric Generalized Diagonal DCC)
+*
+compute gq=%const(0.0)
+nonlin aq bq gq
+maximize(start=%(StartQC()),pmethod=simplex,piters=50,method=bfgs,title="AGDDCC") logl gstart gend
+disp "AGDDCC BIC" -2.0*%logl+(%nreg+uniparms)*log(%nobs)
+disp "LogL" %logl
+
+
+
+dec series[symm] rho
+gset rho gstart gend = %cvtocorr(q)
+
+set rho12 gstart gend = rho(t)(1,2)
+set rho13 gstart gend = rho(t)(1,3)
+set rho14 gstart gend = rho(t)(1,4)
+set rho15 gstart gend = rho(t)(1,5)
+set rho16 gstart gend = rho(t)(1,6)
+set rho17 gstart gend = rho(t)(1,7)
+set rho18 gstart gend = rho(t)(1,8)
+set rho19 gstart gend = rho(t)(1,9)
+set rho110 gstart gend = rho(t)(1,10)
+set rho23 gstart gend = rho(t)(2,3)
+gra 1; # rho23
+set rho24 gstart gend = rho(t)(2,4)
+gra 1; # rho24
+set rho25 gstart gend = rho(t)(2,5)
+gra 1; # rho25
+set rho26 gstart gend = rho(t)(2,6)
+gra 1; # rho26
+set rho27 gstart gend = rho(t)(2,7)
+gra 1; # rho27
+set rho28 gstart gend = rho(t)(2,8)
+gra 1; # rho28
+set rho29 gstart gend = rho(t)(2,9)
+gra 1; # rho29
+set rho210 gstart gend = rho(t)(2,10)
+gra 1; # rho210
+set rho34 gstart gend = rho(t)(3,4)
+gra 1; # rho34
+set rho35 gstart gend = rho(t)(3,5)
+gra 1; # rho35
+set rho36 gstart gend = rho(t)(3,6)
+gra 1; # rho36
+set rho37 gstart gend = rho(t)(3,7)
+gra 1; # rho37
+set rho38 gstart gend = rho(t)(3,8)
+gra 1; # rho38
+set rho39 gstart gend = rho(t)(3,9)
+gra 1; # rho39
+set rho310 gstart gend = rho(t)(3,10)
+gra 1; # rho310
+set rho45 gstart gend = rho(t)(4,5)
+gra 1; # rho45
+set rho46 gstart gend = rho(t)(4,6)
+gra 1; # rho46
+set rho47 gstart gend = rho(t)(4,7)
+gra 1; # rho47
+set rho48 gstart gend = rho(t)(4,8)
+gra 1; # rho48
+set rho49 gstart gend = rho(t)(4,9)
+gra 1; # rho49
+set rho410 gstart gend = rho(t)(4,10)
+gra 1; # rho410
+set rho56 gstart gend = rho(t)(5,6)
+gra 1; # rho56
+set rho57 gstart gend = rho(t)(5,7)
+gra 1; # rho57
+set rho58 gstart gend = rho(t)(5,8)
+gra 1; # rho58
+set rho59 gstart gend = rho(t)(5,9)
+gra 1; # rho59
+set rho510 gstart gend = rho(t)(5,10)
+gra 1; # rho510
+set rho67 gstart gend = rho(t)(6,7)
+gra 1; # rho67
+set rho68 gstart gend = rho(t)(6,8)
+gra 1; # rho68
+set rho69 gstart gend = rho(t)(6,9)
+gra 1; # rho69
+set rho610 gstart gend = rho(t)(6,10)
+gra 1; # rho610
+set rho78 gstart gend = rho(t)(7,8)
+gra 1; # rho78
+set rho79 gstart gend = rho(t)(7,9)
+gra 1; # rho79
+set rho710 gstart gend = rho(t)(7,10)
+gra 1; # rho710
+set rho89 gstart gend = rho(t)(8,9)
+gra 1; # rho89
+set rho810 gstart gend = rho(t)(8,10)
+gra 1; # rho810
+set rho910 gstart gend = rho(t)(9,10)
+gra 1; # rho910
+dis rho(2014:11)
+
+dis rho(2014:10)
+
+STATS RHO23 * 2008:11
+STATS RHO23 2008:12 *
+
+STATS RHO24 * 2008:11
+STATS RHO24 2008:12 *
+
+STATS RHO25 * 2008:11
+STATS RHO25 2008:12 *
+
+STATS RHO26 * 2008:11
+STATS RHO26 2008:12 *
+
+STATS RHO27 * 2008:11
+STATS RHO27 2008:12 *
+
+STATS RHO28 * 2008:11
+STATS RHO28 2008:12 *
+
+STATS RHO29 * 2008:11
+STATS RHO29 2008:12 *
+
+STATS RHO210 * 2008:11
+STATS RHO210 2008:12 *
+
+STATS RHO34 * 2008:11
+STATS RHO34 2008:12 *
+
+STATS RHO35 * 2008:11
+STATS RHO35 2008:12 *
+
+STATS RHO36 * 2008:11
+STATS RHO36 2008:12 *
+
+STATS RHO37 * 2008:11
+STATS RHO37 2008:12 *
+
+STATS RHO38 * 2008:11
+STATS RHO38 2008:12 *
+
+STATS RHO39 * 2008:11
+STATS RHO39 2008:12 *
+
+STATS RHO310 * 2008:11
+STATS RHO310 2008:12 *
+
+STATS RHO45 * 2008:11
+STATS RHO45 2008:12 *
+
+STATS RHO46 * 2008:11
+STATS RHO46 2008:12 *
+
+STATS RHO47 * 2008:11
+STATS RHO47 2008:12 *
+
+STATS RHO48 * 2008:11
+STATS RHO48 2008:12 *
+
+STATS RHO49 * 2008:11
+STATS RHO49 2008:12 *
+
+STATS RHO410 * 2008:11
+STATS RHO410 2008:12 *
+
+STATS RHO56 * 2008:11
+STATS RHO56 2008:12 *
+
+STATS RHO57 * 2008:11
+STATS RHO57 2008:12 *
+
+STATS RHO58 * 2008:11
+STATS RHO58 2008:12 *
+
+STATS RHO59 * 2008:11
+STATS RHO59 2008:12 *
+
+STATS RHO510 * 2008:11
+STATS RHO510 2008:12 *
+
+STATS RHO67 * 2008:11
+STATS RHO67 2008:12 *
+
+STATS RHO68 * 2008:11
+STATS RHO68 2008:12 *
+
+STATS RHO69 * 2008:11
+STATS RHO69 2008:12 *
+
+STATS RHO610 * 2008:11
+STATS RHO610 2008:12 *
+
+STATS RHO78 * 2008:11
+STATS RHO78 2008:12 *
+
+STATS RHO79 * 2008:11
+STATS RHO79 2008:12 *
+
+STATS RHO710 * 2008:11
+STATS RHO710 2008:12 *
+
+STATS RHO89 * 2008:11
+STATS RHO89 2008:12 *
+
+STATS RHO810 * 2008:11
+STATS RHO810 2008:12 *
+
+STATS RHO910 * 2008:11
+STATS RHO910 2008:12 *
+
+
+spgraph(hfields=1,vfields=3)
+graph(grid=qe,shading=contraction,hea="Stocks and Oil")
+# rho25
+graph(grid=qe,shading=contraction,hea="Stocks and Corporate Investment Grade Bonds")
+# rho29
+graph(grid=qe,shading=contraction,hea="Stocks and Corporate Junk Bonds")
+# rho210
+spgraph(done)
+
+spgraph(hfields=1,vfields=3)
+graph(grid=qe,shading=contraction,hea="Corporate Investment Grade Bonds and Long-Term U.S. Treasury Bonds")
+# rho69
+graph(grid=qe,shading=contraction,hea="Corporate Investment Grade Bonds and Short-Term U.S. Treasury Bonds")
+# rho79
+graph(grid=qe,shading=contraction,hea="Corporate Investment Grade Bonds and Intermediate-Term U.S. Treasury Bonds")
+# rho89
+spgraph(done)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
